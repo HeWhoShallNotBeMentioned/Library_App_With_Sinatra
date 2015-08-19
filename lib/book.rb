@@ -45,9 +45,20 @@ class Book
       name = patron.fetch("name")
       phone_number = patron.fetch("phone_number")
       book_id = patron.fetch("book_id").to_i()
-      list_patrons.push(Patron.new({:title => "Harry Potter", :author => "J. K Rowling", :id => nil}))
+      list_patrons.push(Patron.new({:name => name, :phone_number => phone_number, :book_id => book_id}))
     end
     list_patrons
   end
+
+  define_method(:update) do |attributes|
+    @title = attributes.fetch(:title, @title)
+    @author = attributes.fetch(:author, @author)
+    @id = self.id()
+    DB.exec("UPDATE books SET title = '#{@title}', author = '#{@author}' WHERE id = #{@id};")
+    end
+
+    define_method(:delete) do
+      DB.exec("DELETE FROM books WHERE id = #{self.id()};")
+    end
 
 end
