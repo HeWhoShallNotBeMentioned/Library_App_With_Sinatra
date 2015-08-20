@@ -1,15 +1,33 @@
 <h3>Welcome staff member!</h3>
 
 <h4>Staff Search Box by author or title</h4>
+<h1>Your current books</h1>
+<% if @books.any?() %>
+<h3>Here are your books:</h3>
+
+<ul>
+  <% @books.each() do |book| %>
+    <li><a href="/staff/book/<%= book.id()%>"><%= book.title() %></a> </li>
+  <% end %>
+</ul>
+
+<% else %>
+
+  <p>There are no books yet!</p>
+
+<% end %>
+
 </br>
-Create Book Record
-</br>
-Read Book Record
-</br>
-Update Book Record
-</br>
-Delete Book Record
-</br>
-</br>
-</br>
-View Overdue Books
+<h3>Add a book </h3>
+
+<form action="/staff" method="post">
+  <input name="_method" type="hidden" value="post">
+
+  <label for="title">Title:</label>
+  <input id="title" name="title" type="text">
+
+  <label for="author">Author:</label>
+  <input id="author" name="author" type="text">
+
+  <button type="submit">Add book</button>
+</form>
